@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:tgp_app/fitness_app/fintness_app_theme.dart';
-import 'package:tgp_app/fitness_app/ui_view/wave_view.dart';
+import 'package:tgp_app/logbook/logbook_theme.dart';
+import 'package:tgp_app/logbook/ui_view/wave_view.dart';
 import 'package:tgp_app/main.dart';
 
 class WaterView extends StatefulWidget {
@@ -178,7 +178,7 @@ class _WaterViewState extends State<WaterView> with TickerProviderStateMixin {
                                           width: 24,
                                           height: 24,
                                           child: Image.asset(
-                                              'assets/fitness_app/bell.png'),
+                                              'assets/logbook/bell.png'),
                                         ),
                                         Flexible(
                                           child: Text(

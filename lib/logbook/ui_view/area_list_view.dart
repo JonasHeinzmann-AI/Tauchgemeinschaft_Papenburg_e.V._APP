@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../fintness_app_theme.dart';
+import '../logbook_theme.dart';
 
 class AreaListView extends StatefulWidget {
   const AreaListView(
@@ -17,10 +17,10 @@ class _AreaListViewState extends State<AreaListView>
     with TickerProviderStateMixin {
   AnimationController animationController;
   List<String> areaListData = <String>[
-    'assets/fitness_app/area1.png',
-    'assets/fitness_app/area2.png',
-    'assets/fitness_app/area3.png',
-    'assets/fitness_app/area1.png',
+    'assets/logbook/area1.png',
+    'assets/logbook/area2.png',
+    'assets/logbook/area3.png',
+    'assets/logbook/area1.png',
   ];
 
   @override
