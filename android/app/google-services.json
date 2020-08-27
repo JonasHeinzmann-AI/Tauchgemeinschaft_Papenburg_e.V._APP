@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "753656166511",
+    "firebase_url": "https://tgp-app-iosandroid.firebaseio.com",
+    "project_id": "tgp-app-iosandroid",
+    "storage_bucket": "tgp-app-iosandroid.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:753656166511:android:3d74a003213e4b5a1c759a",
+        "android_client_info": {
+          "package_name": "com.app.tgp_papenburg_ev"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "753656166511-kfq836lfqubbdekh0hs977jfvnf7pt9n.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBy6U7zD7mx_uFDC1-OXGiGzyrwXYUiFSc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "753656166511-kfq836lfqubbdekh0hs977jfvnf7pt9n.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
