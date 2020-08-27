@@ -1,7 +1,7 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
-import 'package:tgp_app/fitness_app/fintness_app_theme.dart';
+import 'package:tgp_app/logbook/logbook_theme.dart';
 import 'package:tgp_app/main.dart';
 
 final startTime = DateTime(2020, 5, 4, 10, 30);
@@ -116,7 +116,7 @@ class MediterranesnDietView extends StatelessWidget {
                                                   width: 28,
                                                   height: 28,
                                                   child: Image.asset(
-                                                      "assets/fitness_app/eaten.png"),
+                                                      "assets/logbook/eaten.png"),
                                                 ),
                                                 Padding(
                                                   padding:
@@ -215,7 +215,7 @@ class MediterranesnDietView extends StatelessWidget {
                                                   width: 28,
                                                   height: 28,
                                                   child: Image.asset(
-                                                      "assets/fitness_app/burned.png"),
+                                                      "assets/logbook/burned.png"),
                                                 ),
                                                 Padding(
                                                   padding:

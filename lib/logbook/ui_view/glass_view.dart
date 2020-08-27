@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tgp_app/main.dart';
 
-import '../fintness_app_theme.dart';
+import '../logbook_theme.dart';
 
 class GlassView extends StatelessWidget {
   final AnimationController animationController;
@@ -72,7 +72,7 @@ class GlassView extends StatelessWidget {
                         child: SizedBox(
                           width: 80,
                           height: 80,
-                          child: Image.asset("assets/fitness_app/glass.png"),
+                          child: Image.asset("assets/logbook/glass.png"),
                         ),
                       )
                     ],

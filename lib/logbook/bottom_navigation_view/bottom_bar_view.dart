@@ -1,8 +1,8 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
-import 'package:tgp_app/fitness_app/fintness_app_theme.dart';
-import 'package:tgp_app/fitness_app/models/tabIcon_data.dart';
+import 'package:tgp_app/logbook/logbook_theme.dart';
+import 'package:tgp_app/logbook/models/tabIcon_data.dart';
 import 'package:tgp_app/main.dart';
 
 import '../../main.dart';

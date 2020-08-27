@@ -1,7 +1,7 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
-import 'package:tgp_app/fitness_app/fintness_app_theme.dart';
+import 'package:tgp_app/logbook/logbook_theme.dart';
 import 'package:vector_math/vector_math.dart' as vector;
 
 class WaveView extends StatefulWidget {
@@ -244,7 +244,7 @@ class _WaveViewState extends State<WaveView> with TickerProviderStateMixin {
               children: <Widget>[
                 AspectRatio(
                   aspectRatio: 1,
-                  child: Image.asset("assets/fitness_app/bottle.png"),
+                  child: Image.asset("assets/logbook/bottle.png"),
                 ),
               ],
             )

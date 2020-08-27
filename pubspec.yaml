@@ -72,7 +72,7 @@ flutter:
   assets:
     - assets/images/
     - assets/design_course/
-    - assets/fitness_app/
+    - assets/logbook/
     - assets/hotel/
     - assets/cover/
     - assets/kurse/cmas/

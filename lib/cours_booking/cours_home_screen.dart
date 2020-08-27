@@ -2,11 +2,10 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:tgp_app/hotel_booking/calendar_popup_view.dart';
-import 'package:tgp_app/hotel_booking/hotel_list_view.dart';
-import 'package:tgp_app/hotel_booking/model/hotel_list_data.dart';
+import 'package:tgp_app/cours_booking/cours_list_view.dart';
+import 'package:tgp_app/cours_booking/model/hotel_list_data.dart';
 
-import 'hotel_app_theme.dart';
+import 'cours_theme.dart';
 
 class HotelHomeScreen extends StatefulWidget {
   @override
@@ -366,28 +365,6 @@ class _HotelHomeScreenState extends State<HotelHomeScreen>
           ),
         )
       ],
-    );
-  }
-
-  void showDemoDialog({BuildContext context}) {
-    showDialog<dynamic>(
-      context: context,
-      builder: (BuildContext context) => CalendarPopupView(
-        barrierDismissible: true,
-        minimumDate: DateTime.now(),
-        //  maximumDate: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day + 10),
-        initialEndDate: endDate,
-        initialStartDate: startDate,
-        onApplyClick: (DateTime startData, DateTime endData) {
-          setState(() {
-            if (startData != null && endData != null) {
-              startDate = startData;
-              endDate = endData;
-            }
-          });
-        },
-        onCancelClick: () {},
-      ),
     );
   }
 

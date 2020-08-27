@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:tgp_app/fitness_app/models/tabIcon_data.dart';
-import 'package:tgp_app/fitness_app/traning/training_screen.dart';
+import 'package:tgp_app/logbook/models/tabIcon_data.dart';
+import 'package:tgp_app/logbook/traning/training_screen.dart';
 
 import 'bottom_navigation_view/bottom_bar_view.dart';
-import 'fintness_app_theme.dart';
+import 'logbook_theme.dart';
 import 'my_diary/my_diary_screen.dart';
 
 class FitnessAppHomeScreen extends StatefulWidget {

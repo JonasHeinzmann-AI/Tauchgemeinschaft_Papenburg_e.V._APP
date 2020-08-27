@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tgp_app/main.dart';
 
-import '../fintness_app_theme.dart';
+import '../logbook_theme.dart';
 
 class WorkoutView extends StatelessWidget {
   final AnimationController animationController;

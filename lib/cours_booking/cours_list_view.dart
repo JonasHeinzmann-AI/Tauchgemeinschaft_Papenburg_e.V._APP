@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:tgp_app/hotel_booking/hotel_app_theme.dart';
+import 'package:tgp_app/cours_booking/cours_theme.dart';
 
-import 'filters_screen.dart';
 import 'model/hotel_list_data.dart';
 
 class HotelListView extends StatelessWidget {
@@ -10,7 +9,6 @@ class HotelListView extends StatelessWidget {
       this.hotelData,
       this.animationController,
       this.animation,
-      this.filterdata,
       this.callback})
       : super(key: key);
 
@@ -18,7 +16,7 @@ class HotelListView extends StatelessWidget {
   final HotelListData hotelData;
   final AnimationController animationController;
   final Animation<dynamic> animation;
-  final FiltersScreen filterdata;
+
   @override
   Widget build(BuildContext context) {
     return AnimatedBuilder(
