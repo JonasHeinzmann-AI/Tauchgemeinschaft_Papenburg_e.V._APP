@@ -1,0 +1,40 @@
+
+  void run() {
+    List id = null;
+    id = NewsList.where((item) => item.id3).toList();
+    print(List);
+  }
+
+
+  static List<NewsListData> NewsList = <NewsListData>[
+    NewsListData(
+      imagePath: 'assets/kurse/cmas/cmas1.png',
+      titleTxt: 'CMAS*',
+      subTxt: 'Inkl. Lehrmaterial',
+      anmeldeschluss: '01.März 2020',
+      kursgebuehr: 95,
+      id1: false,
+      id2: false,
+      id3: true,
+    ),
+    NewsListData(
+      imagePath: 'assets/kurse/cmas/cmas2.png',
+      titleTxt: 'CMAS**',
+      subTxt: 'Inkl. Lehrmaterial',
+      anmeldeschluss: '01.März 2020',
+      kursgebuehr: 115,
+      id1: false,
+      id2: false,
+      id3: true,
+    ),
+    NewsListData(
+      imagePath: 'assets/kurse/cmas/cmas3.png',
+      titleTxt: 'CMAS***',
+      subTxt: 'Inkl. Lehrmaterial',
+      anmeldeschluss: '01.März 2020',
+      kursgebuehr: 115,
+      id1: false,
+      id2: false,
+      id3: true,
+    ),
+  ];

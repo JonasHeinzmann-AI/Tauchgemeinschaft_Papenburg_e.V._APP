@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:splashscreen/splashscreen.dart';
 
 import 'navigation_home_screen.dart';
 
@@ -42,12 +43,16 @@ class _SplashPageState extends State<SplashPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Container(
-          child: Text("Loading..."),
+    return new SplashScreen(
+        seconds: 30,
+        title: new Text(
+          'Loading...',
+          style: new TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
         ),
-      ),
-    );
+        image: Image.asset('assets/login/TGP.png'),
+        backgroundColor: Colors.white,
+        styleTextUnderTheLoader: new TextStyle(),
+        photoSize: 100.0,
+        loaderColor: Colors.blue);
   }
 }
