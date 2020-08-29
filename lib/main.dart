@@ -1,14 +1,17 @@
 import 'dart:io';
 
+import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:firebase_analytics/observer.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:syncfusion_flutter_core/core.dart';
 import 'package:tgp_app/app_theme.dart';
+import 'package:tgp_app/register.dart';
 
+import 'agb.dart';
 import 'login.dart';
 import 'navigation_home_screen.dart';
-import 'register.dart';
 import 'splash_page.dart';
 import 'task.dart';
 
@@ -25,6 +28,7 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
+  FirebaseAnalytics analytics = FirebaseAnalytics();
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
@@ -45,10 +49,14 @@ class MyApp extends StatelessWidget {
           platform: TargetPlatform.iOS,
         ),
         home: SplashPage(),
+        navigatorObservers: [
+          FirebaseAnalyticsObserver(analytics: analytics),
+        ],
         routes: <String, WidgetBuilder>{
           '/task': (BuildContext context) => TaskPage(title: 'Task'),
           '/home': (BuildContext context) => NavigationHomeScreen(),
           '/login': (BuildContext context) => LoginPage(),
+          '/agb': (BuildContext context) => agb(),
           '/register': (BuildContext context) => RegisterPage(),
         });
   }
