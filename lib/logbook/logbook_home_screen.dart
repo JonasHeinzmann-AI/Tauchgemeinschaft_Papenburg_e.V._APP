@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tgp_app/logbook/add_entry.dart';
 import 'package:tgp_app/logbook/models/tabIcon_data.dart';
 import 'package:tgp_app/logbook/traning/training_screen.dart';
 
@@ -90,7 +91,7 @@ class _FitnessAppHomeScreenState extends State<FitnessAppHomeScreen>
                       MyDiaryScreen(animationController: animationController);
                 });
               });
-            } else if (index == 1 || index == 3) {
+            } else if (index == 1) {
               animationController.reverse().then<dynamic>((data) {
                 if (!mounted) {
                   return;
@@ -98,6 +99,15 @@ class _FitnessAppHomeScreenState extends State<FitnessAppHomeScreen>
                 setState(() {
                   tabBody =
                       TrainingScreen(animationController: animationController);
+                });
+              });
+            } else if (index == 3) {
+              animationController.reverse().then<dynamic>((data) {
+                if (!mounted) {
+                  return;
+                }
+                setState(() {
+                  tabBody = add_entry(animationController: animationController);
                 });
               });
             }

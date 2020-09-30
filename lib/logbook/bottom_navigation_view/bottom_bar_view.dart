@@ -100,11 +100,11 @@ class _BottomBarViewState extends State<BottomBarView>
                             ),
                             Expanded(
                               child: TabIcons(
-                                  tabIconData: widget.tabIconsList[3],
+                                  tabIconData: widget.tabIconsList[1],
                                   removeAllSelect: () {
                                     setRemoveAllSelection(
-                                        widget.tabIconsList[3]);
-                                    widget.changeIndex(3);
+                                        widget.tabIconsList[1]);
+                                    widget.changeIndex(1);
                                   }),
                             ),
                           ],
@@ -162,19 +162,12 @@ class _BottomBarViewState extends State<BottomBarView>
                       ),
                       child: Material(
                         color: Colors.transparent,
-                        child: InkWell(
-                          splashColor: Colors.white.withOpacity(0.1),
-                          highlightColor: Colors.transparent,
-                          focusColor: Colors.transparent,
-                          onTap: () {
-                            widget.addClick();
-                          },
-                          child: Icon(
-                            Icons.add,
-                            color: FintnessAppTheme.white,
-                            size: 32,
-                          ),
-                        ),
+                        child: TabIcons(
+                            tabIconData: widget.tabIconsList[3],
+                            removeAllSelect: () {
+                              setRemoveAllSelection(widget.tabIconsList[3]);
+                              widget.changeIndex(3);
+                            }),
                       ),
                     ),
                   ),

@@ -1,5 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:tgp_app/app_theme.dart';
+import 'package:tgp_app/global.dart' as globals;
 
 import 'model/homelist.dart';
 
@@ -14,11 +17,34 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
   List<HomeList> homeList = HomeList.homeList;
   AnimationController animationController;
   bool multiple = true;
+  final _auth = FirebaseAuth.instance;
+
+  dynamic user;
+
+  String userEmail;
+
+  String userPhoneNumber;
+
+  String userId;
+
+  int documents;
+
+  void countDocuments() async {
+    user = await _auth.currentUser();
+    userId = user.uid;
+    userEmail = user.email;
+    userPhoneNumber = user.phoneNumber;
+    QuerySnapshot _myDoc =
+        await Firestore.instance.collection(userId).getDocuments();
+    List<DocumentSnapshot> _myDocCount = _myDoc.documents;
+    globals.docnum = (_myDocCount.length); // Count of Documents in Collection
+  }
 
   @override
   void initState() {
     animationController = AnimationController(
         duration: const Duration(milliseconds: 2000), vsync: this);
+    countDocuments();
     super.initState();
   }
 

@@ -167,7 +167,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   FlatButton(
                     child: Text("Login here!"),
                     onPressed: () {
-                      Navigator.pop(context);
+                      Navigator.pushNamed(context, "/login");
                     },
                   )
                 ],

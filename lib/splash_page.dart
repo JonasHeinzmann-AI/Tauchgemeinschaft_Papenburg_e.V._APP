@@ -44,11 +44,12 @@ class _SplashPageState extends State<SplashPage> {
   @override
   Widget build(BuildContext context) {
     return new SplashScreen(
-        seconds: 30,
+        seconds: 3,
         title: new Text(
           'Loading...',
           style: new TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
         ),
+        navigateAfterSeconds: NavigationHomeScreen(),
         image: Image.asset('assets/login/TGP.png'),
         backgroundColor: Colors.white,
         styleTextUnderTheLoader: new TextStyle(),
