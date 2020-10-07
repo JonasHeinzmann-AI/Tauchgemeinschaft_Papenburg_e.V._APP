@@ -28,6 +28,13 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
   String userId;
 
   int documents;
+  int _fact;
+  dynamic data;
+  double test;
+  dynamic datar = globals.data;
+  int _dat = globals.docnum;
+  Timestamp startTime;
+  DateTime Time = DateTime.now();
 
   void countDocuments() async {
     user = await _auth.currentUser();
@@ -37,7 +44,44 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
     QuerySnapshot _myDoc =
         await Firestore.instance.collection(userId).getDocuments();
     List<DocumentSnapshot> _myDocCount = _myDoc.documents;
-    globals.docnum = (_myDocCount.length); // Count of Documents in Collection
+    globals.docnum = (_myDocCount.length);
+    _fact = (_myDocCount.length);
+    globals.uid = (userId); // Count of Documents in Collection
+    final DocumentReference document =
+        Firestore.instance.collection(globals.uid).document("tg$_fact");
+
+    await document.get().then<dynamic>((DocumentSnapshot snapshot) async {
+      setState(() {
+        data = snapshot.data;
+        print(data['Air_Temp']);
+        startTime = data['Date'];
+        DateTime Timestart = startTime.toDate();
+        int difference1 = Time.difference(Timestart).inHours;
+        int difference2 = Time.difference(Timestart).inMinutes;
+        print(difference1);
+        globals.diff = difference1;
+        test = data['Air_Temp'];
+        globals.temp = test;
+        globals.data = data;
+        if (difference1 > 24) {
+          globals.diff = 0;
+          globals.durpref = "Min";
+          globals.degree = 0;
+        } else if (difference1 < 1) {
+          globals.diff = difference2;
+          globals.durpref = "Min";
+          globals.degree = (6 * difference2);
+        } else if (difference1 < 0) {
+          globals.diff = 0;
+          globals.durpref = "Min";
+          globals.degree = 0;
+        } else {
+          globals.diff = difference1;
+          globals.durpref = "Std";
+          globals.degree = (15 * difference1);
+        }
+      });
+    });
   }
 
   @override

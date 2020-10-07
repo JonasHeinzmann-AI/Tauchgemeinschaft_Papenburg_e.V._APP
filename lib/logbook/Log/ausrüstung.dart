@@ -1,112 +1,96 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
-import 'package:intl/intl.dart';
 import 'package:numberpicker/numberpicker.dart';
 import 'package:tgp_app/global.dart' as globals;
 import 'package:tgp_app/logbook/logbook_theme.dart';
 
-class BodyMeasurementView extends StatefulWidget {
+class AusrustungViewget extends StatefulWidget {
   final AnimationController animationController;
   final Animation animation;
 
-  BodyMeasurementView({Key key, this.animationController, this.animation})
+  const AusrustungViewget({Key key, this.animationController, this.animation})
       : super(key: key);
 
   @override
-  _BodyMeasurementViewState createState() => _BodyMeasurementViewState();
+  _AusrustungViewgetState createState() => _AusrustungViewgetState();
 }
 
-class _BodyMeasurementViewState extends State<BodyMeasurementView> {
-  _selectDate(BuildContext context) async {}
-  double _currentTemp = globals.AirTemp;
-  double _currentTempwat = globals.WaterTemperature;
-  int _duration = globals.Duration;
-  double _depth = globals.Depth;
+class _AusrustungViewgetState extends State<AusrustungViewget> {
+  int _DTGsize = globals.data['DTG_Size'];
+  double _luft = globals.data['DTGpreassure'];
+  int _blei = globals.data['Blei_Weight'];
+  double _neopren = globals.data['Neopren_Thickness'];
 
-  void initState() {
-    globals.date = DateTime.now();
-    super.initState();
-  }
-
-  void _showDialogdepth() {
+  void _showDialogNeopren() {
     showDialog<double>(
         context: context,
         builder: (BuildContext context) {
           return new NumberPickerDialog.decimal(
-            minValue: -50,
-            maxValue: 50,
-            title: new Text("Tiefe des Tauchgangs"),
-            initialDoubleValue: _depth,
+            minValue: 0,
+            maxValue: 20,
+            title: new Text("Neopren Stärke"),
+            initialDoubleValue: _neopren,
           );
         }).then((double value) {
       if (value != null) {
-        setState(() => _depth = value);
-        globals.Depth = value;
+        setState(() => _neopren = value);
+        globals.Neopren = value;
       }
     });
   }
 
-  void _showDialogTemp() {
-    showDialog<double>(
-        context: context,
-        builder: (BuildContext context) {
-          return new NumberPickerDialog.decimal(
-            minValue: -50,
-            maxValue: 50,
-            title: new Text("Temperatur über Wasser"),
-            initialDoubleValue: _currentTemp,
-          );
-        }).then((double value) {
-      if (value != null) {
-        setState(() => _currentTemp = value);
-        globals.AirTemp = value;
-      }
-    });
-  }
-
-  void _showDialogTempwat() {
-    showDialog<double>(
-        context: context,
-        builder: (BuildContext context) {
-          return new NumberPickerDialog.decimal(
-            minValue: -50,
-            maxValue: 50,
-            title: new Text("Temperatur unter Wasser"),
-            initialDoubleValue: _currentTempwat,
-          );
-        }).then((double value) {
-      if (value != null) {
-        setState(() => _currentTempwat = value);
-        globals.WaterTemperature = value;
-      }
-    });
-  }
-
-  void _showDialogduration() {
+  void _showDTGsize() {
     showDialog<int>(
         context: context,
         builder: (BuildContext context) {
           return new NumberPickerDialog.integer(
             minValue: 0,
-            maxValue: 500,
-            title: new Text("Dauer des Tauchgangs"),
-            initialIntegerValue: _duration,
+            maxValue: 20,
+            title: new Text("Größe des DGT"),
+            initialIntegerValue: _DTGsize,
           );
         }).then((num value) {
       if (value != null) {
-        setState(() => _duration = value);
-        globals.Duration = value;
+        setState(() => _DTGsize = value);
+        globals.dtg = value;
       }
     });
   }
 
-  String _date = "Auswahl";
+  void _showBlei() {
+    showDialog<int>(
+        context: context,
+        builder: (BuildContext context) {
+          return new NumberPickerDialog.integer(
+            minValue: 0,
+            maxValue: 20,
+            title: new Text("Bleich Gewicht"),
+            initialIntegerValue: _blei,
+          );
+        }).then((num value) {
+      if (value != null) {
+        setState(() => _blei = value);
+        globals.Blei = value;
+      }
+    });
+  }
 
-  String _temp = "Auswahl";
-  String _time = "Not set";
-  String _text = "Not set";
-  int selectedValue = 0;
+  void _showDialogLuft() {
+    showDialog<double>(
+        context: context,
+        builder: (BuildContext context) {
+          return new NumberPickerDialog.decimal(
+            minValue: 50,
+            maxValue: 300,
+            title: new Text("Flaschen Füllung"),
+            initialDoubleValue: _luft,
+          );
+        }).then((double value) {
+      if (value != null) {
+        setState(() => _luft = value);
+        globals.Airpreassure = value;
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -149,7 +133,7 @@ class _BodyMeasurementViewState extends State<BodyMeasurementView> {
                             padding: const EdgeInsets.only(
                                 left: 4, bottom: 8, top: 16),
                             child: Text(
-                              'Tiefe',
+                              'Neopren',
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                   fontFamily: FintnessAppTheme.fontName,
@@ -169,10 +153,10 @@ class _BodyMeasurementViewState extends State<BodyMeasurementView> {
                                 children: <Widget>[
                                   FlatButton(
                                     onPressed: () {
-                                      _showDialogdepth();
+                                      _showDialogNeopren();
                                     },
                                     child: Text(
-                                      '$_depth',
+                                      '$_neopren',
                                       textAlign: TextAlign.center,
                                       style: TextStyle(
                                         fontFamily: FintnessAppTheme.fontName,
@@ -186,7 +170,7 @@ class _BodyMeasurementViewState extends State<BodyMeasurementView> {
                                     padding: const EdgeInsets.only(
                                         left: 1, bottom: 8),
                                     child: Text(
-                                      'm',
+                                      'mm',
                                       textAlign: TextAlign.center,
                                       style: TextStyle(
                                         fontFamily: FintnessAppTheme.fontName,
@@ -199,53 +183,6 @@ class _BodyMeasurementViewState extends State<BodyMeasurementView> {
                                   ),
                                 ],
                               ),
-                              Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                children: <Widget>[
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: <Widget>[
-                                      Icon(
-                                        Icons.access_time,
-                                        color: FintnessAppTheme.grey
-                                            .withOpacity(0.5),
-                                        size: 16,
-                                      ),
-                                      FlatButton(
-                                          onPressed: () {
-                                            DatePicker.showDateTimePicker(
-                                                context,
-                                                showTitleActions: true,
-                                                onConfirm: (date) {
-                                              String formattedDate = DateFormat(
-                                                      'dd.MM.yyyy | kk:mm')
-                                                  .format(date);
-                                              globals.date = date;
-                                              print(globals.date);
-                                              _date = '${formattedDate} Uhr';
-                                              setState(() {});
-                                            },
-                                                currentTime: globals.date,
-                                                locale: LocaleType.de);
-                                          },
-                                          child: Text(
-                                            '$_date',
-                                            textAlign: TextAlign.center,
-                                            style: TextStyle(
-                                              fontFamily:
-                                                  FintnessAppTheme.fontName,
-                                              fontWeight: FontWeight.w500,
-                                              fontSize: 14,
-                                              letterSpacing: 0.0,
-                                              color: FintnessAppTheme.grey
-                                                  .withOpacity(0.5),
-                                            ),
-                                          ))
-                                    ],
-                                  ),
-                                ],
-                              )
                             ],
                           )
                         ],
@@ -274,10 +211,10 @@ class _BodyMeasurementViewState extends State<BodyMeasurementView> {
                               children: <Widget>[
                                 FlatButton(
                                     onPressed: () {
-                                      _showDialogTemp();
+                                      _showDTGsize();
                                     },
                                     child: Text(
-                                      '$_currentTemp °C',
+                                      '$_DTGsize L',
                                       textAlign: TextAlign.center,
                                       style: TextStyle(
                                         fontFamily: FintnessAppTheme.fontName,
@@ -290,7 +227,7 @@ class _BodyMeasurementViewState extends State<BodyMeasurementView> {
                                 Padding(
                                   padding: const EdgeInsets.only(top: 1),
                                   child: Text(
-                                    'Luft Temperatur',
+                                    'Flasche',
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
                                       fontFamily: FintnessAppTheme.fontName,
@@ -315,10 +252,10 @@ class _BodyMeasurementViewState extends State<BodyMeasurementView> {
                                   children: <Widget>[
                                     FlatButton(
                                         onPressed: () {
-                                          _showDialogTempwat();
+                                          _showBlei();
                                         },
                                         child: Text(
-                                          '$_currentTempwat °C',
+                                          '$_blei Kg',
                                           textAlign: TextAlign.center,
                                           style: TextStyle(
                                             fontFamily:
@@ -332,7 +269,7 @@ class _BodyMeasurementViewState extends State<BodyMeasurementView> {
                                     Padding(
                                       padding: const EdgeInsets.only(top: 1),
                                       child: Text(
-                                        'Wasser Temperatur',
+                                        'Blei',
                                         textAlign: TextAlign.center,
                                         style: TextStyle(
                                           fontFamily: FintnessAppTheme.fontName,
@@ -359,10 +296,10 @@ class _BodyMeasurementViewState extends State<BodyMeasurementView> {
                                   children: <Widget>[
                                     FlatButton(
                                         onPressed: () {
-                                          _showDialogduration();
+                                          _showDialogLuft();
                                         },
                                         child: Text(
-                                          '$_duration min',
+                                          '$_luft Bar',
                                           textAlign: TextAlign.center,
                                           style: TextStyle(
                                             fontFamily:
@@ -376,7 +313,7 @@ class _BodyMeasurementViewState extends State<BodyMeasurementView> {
                                     Padding(
                                       padding: const EdgeInsets.only(top: 1),
                                       child: Text(
-                                        'Dauer',
+                                        'Luftdruck',
                                         textAlign: TextAlign.center,
                                         style: TextStyle(
                                           fontFamily: FintnessAppTheme.fontName,

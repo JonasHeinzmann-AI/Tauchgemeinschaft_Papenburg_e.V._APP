@@ -1,8 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:tgp_app/global.dart' as globals;
 import 'package:tgp_app/logbook/logbook_theme.dart';
-import 'package:tgp_app/logbook/my_diary/meals_list_view.dart';
 import 'package:tgp_app/logbook/my_diary/water_view.dart';
+import 'package:tgp_app/logbook/ui_view/ausr%C3%BCstung.dart';
 import 'package:tgp_app/logbook/ui_view/body_measurement.dart';
 import 'package:tgp_app/logbook/ui_view/glass_view.dart';
 import 'package:tgp_app/logbook/ui_view/title_view.dart';
@@ -55,47 +57,36 @@ class _add_entry extends State<add_entry> with TickerProviderStateMixin {
     super.initState();
   }
 
+  final databaseReference = Firestore.instance;
+  void _UploadeData() {
+    int _dive = globals.docnum + 1;
+    void uploadingData() async {
+      await databaseReference
+          .collection(globals.uid)
+          .document("tg$_dive")
+          .setData({
+        'Depth': globals.Depth,
+        'Air_Temp': globals.AirTemp,
+        'Water_Temp': globals.WaterTemperature,
+        'Duration': globals.Duration,
+        'Neopren_Thickness': globals.Neopren,
+        'DTG_Size': globals.dtg,
+        'Blei_Weight': globals.Blei,
+        'DTGpreassure': globals.Airpreassure,
+        'Date': globals.date,
+        'Buddys': globals.buddys,
+      });
+    }
+
+    uploadingData();
+    globals.docnum = globals.docnum + 1;
+  }
+
   void addAllListData() {
     const int count = 9;
-
-    listViews.add(
-      TitleView(
-        titleTxt: 'Übersicht',
-        subTxt: 'Details',
-        animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
-            parent: widget.animationController,
-            curve:
-                Interval((1 / count) * 0, 1.0, curve: Curves.fastOutSlowIn))),
-        animationController: widget.animationController,
-      ),
-    );
-    listViews.add(
-      TitleView(
-        titleTxt: 'Meals today',
-        subTxt: 'Customize',
-        animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
-            parent: widget.animationController,
-            curve:
-                Interval((1 / count) * 2, 1.0, curve: Curves.fastOutSlowIn))),
-        animationController: widget.animationController,
-      ),
-    );
-
-    listViews.add(
-      MealsListView(
-        mainScreenAnimation: Tween<double>(begin: 0.0, end: 1.0).animate(
-            CurvedAnimation(
-                parent: widget.animationController,
-                curve: Interval((1 / count) * 3, 1.0,
-                    curve: Curves.fastOutSlowIn))),
-        mainScreenAnimationController: widget.animationController,
-      ),
-    );
-
     listViews.add(
       TitleView(
         titleTxt: 'Tauchgangs Daten',
-        subTxt: 'Today',
         animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
             parent: widget.animationController,
             curve:
@@ -116,7 +107,6 @@ class _add_entry extends State<add_entry> with TickerProviderStateMixin {
     listViews.add(
       TitleView(
         titleTxt: 'Ausrüstungs Daten',
-        subTxt: 'Today',
         animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
             parent: widget.animationController,
             curve:
@@ -126,7 +116,7 @@ class _add_entry extends State<add_entry> with TickerProviderStateMixin {
     );
 
     listViews.add(
-      BodyMeasurementView(
+      AusrustungView(
         animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
             parent: widget.animationController,
             curve:
@@ -136,8 +126,7 @@ class _add_entry extends State<add_entry> with TickerProviderStateMixin {
     );
     listViews.add(
       TitleView(
-        titleTxt: 'Water',
-        subTxt: 'Aqua SmartBottle',
+        titleTxt: 'Buddy',
         animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
             parent: widget.animationController,
             curve:
@@ -282,12 +271,6 @@ class _add_entry extends State<add_entry> with TickerProviderStateMixin {
                                 borderRadius: const BorderRadius.all(
                                     Radius.circular(32.0)),
                                 onTap: () {},
-                                child: Center(
-                                  child: Icon(
-                                    Icons.keyboard_arrow_left,
-                                    color: FintnessAppTheme.grey,
-                                  ),
-                                ),
                               ),
                             ),
                             Padding(
@@ -297,42 +280,16 @@ class _add_entry extends State<add_entry> with TickerProviderStateMixin {
                               ),
                               child: Row(
                                 children: <Widget>[
-                                  Padding(
-                                    padding: const EdgeInsets.only(right: 8),
-                                    child: Icon(
-                                      Icons.calendar_today,
-                                      color: FintnessAppTheme.grey,
-                                      size: 18,
-                                    ),
-                                  ),
-                                  Text(
-                                    '$dateFormate',
-                                    textAlign: TextAlign.left,
-                                    style: TextStyle(
-                                      fontFamily: FintnessAppTheme.fontName,
-                                      fontWeight: FontWeight.normal,
-                                      fontSize: 18,
-                                      letterSpacing: -0.2,
-                                      color: FintnessAppTheme.darkerText,
-                                    ),
-                                  ),
+                                  FlatButton.icon(
+                                    icon: Icon(Icons.save), //`Icon` to display
+                                    label: Text('Speichern'),
+                                    onPressed: () {
+                                      _UploadeData();
+                                      print(globals.uid);
+                                      print(globals.docnum);
+                                    },
+                                  )
                                 ],
-                              ),
-                            ),
-                            SizedBox(
-                              height: 38,
-                              width: 38,
-                              child: InkWell(
-                                highlightColor: Colors.transparent,
-                                borderRadius: const BorderRadius.all(
-                                    Radius.circular(32.0)),
-                                onTap: () {},
-                                child: Center(
-                                  child: Icon(
-                                    Icons.keyboard_arrow_right,
-                                    color: FintnessAppTheme.grey,
-                                  ),
-                                ),
                               ),
                             ),
                           ],

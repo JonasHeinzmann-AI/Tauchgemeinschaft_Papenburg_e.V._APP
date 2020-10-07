@@ -5,39 +5,30 @@ import 'package:tgp_app/global.dart' as globals;
 import 'package:tgp_app/logbook/logbook_theme.dart';
 import 'package:tgp_app/main.dart';
 
-final startTime = DateTime(2020, 5, 4, 10, 30);
-final endTime = startTime.add(new Duration(hours: 24));
-final Time = DateTime.now();
-var difference1 = Time.difference(endTime).inMinutes;
-var t = Time.compareTo(endTime);
-var R = 0;
-var Graph = 0;
-
-void main() {
-  while (t < 0) {
-    R = (difference1 / (24 * 60)) as int;
-    Graph = 360 * R;
-  }
-  ;
-}
-
-class MediterranesnDietView extends StatelessWidget {
+class MediterranesnDietView extends StatefulWidget {
   final AnimationController animationController;
   final Animation animation;
-
   MediterranesnDietView({Key key, this.animationController, this.animation})
       : super(key: key);
 
   @override
+  _MediterranesnDietView createState() => _MediterranesnDietView();
+}
+
+class _MediterranesnDietView extends State<MediterranesnDietView> {
+  int timeleft = globals.diff;
+  String pref = globals.durpref;
+  int deg = globals.degree;
+  @override
   Widget build(BuildContext context) {
     return AnimatedBuilder(
-      animation: animationController,
+      animation: widget.animationController,
       builder: (BuildContext context, Widget child) {
         return FadeTransition(
-          opacity: animation,
+          opacity: widget.animation,
           child: new Transform(
             transform: new Matrix4.translationValues(
-                0.0, 30 * (1.0 - animation.value), 0.0),
+                0.0, 30 * (1.0 - widget.animation.value), 0.0),
             child: Padding(
               padding: const EdgeInsets.only(
                   left: 24, right: 24, top: 16, bottom: 18),
@@ -222,7 +213,7 @@ class MediterranesnDietView extends StatelessWidget {
                                                       const EdgeInsets.only(
                                                           left: 4, bottom: 3),
                                                   child: Text(
-                                                    '${(19 * animation.value).toInt()}',
+                                                    '${(19 * widget.animation.value).toInt()}',
                                                     textAlign: TextAlign.center,
                                                     style: TextStyle(
                                                       fontFamily:
@@ -297,7 +288,7 @@ class MediterranesnDietView extends StatelessWidget {
                                             CrossAxisAlignment.center,
                                         children: <Widget>[
                                           Text(
-                                            '${(15 * animation.value).toInt()} Std',
+                                            '${(timeleft * widget.animation.value).toInt()} $pref',
                                             textAlign: TextAlign.center,
                                             style: TextStyle(
                                               fontFamily:
@@ -335,9 +326,10 @@ class MediterranesnDietView extends StatelessWidget {
                                             HexColor("#8A98E8"),
                                             HexColor("#8A98E8")
                                           ],
-                                          angle: 180 +
+                                          angle: deg +
                                               (360 - 140) *
-                                                  (1.0 - animation.value)),
+                                                  (1.0 -
+                                                      widget.animation.value)),
                                       child: SizedBox(
                                         width: 108,
                                         height: 108,

@@ -48,6 +48,8 @@ class _RegisterPageState extends State<RegisterPage> {
     }
   }
 
+  String test = "Login here!";
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -165,7 +167,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
                   Text("Already have an account?"),
                   FlatButton(
-                    child: Text("Login here!"),
+                    child: Text("$test"),
                     onPressed: () {
                       Navigator.pushNamed(context, "/login");
                     },

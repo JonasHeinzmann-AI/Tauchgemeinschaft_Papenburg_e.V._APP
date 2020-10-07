@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:tgp_app/global.dart' as globals;
 import 'package:tgp_app/logbook/logbook_theme.dart';
 
-class WaterView extends StatefulWidget {
-  const WaterView(
+class BuddyView extends StatefulWidget {
+  const BuddyView(
       {Key key, this.mainScreenAnimationController, this.mainScreenAnimation})
       : super(key: key);
 
@@ -11,14 +11,16 @@ class WaterView extends StatefulWidget {
   final Animation<dynamic> mainScreenAnimation;
 
   @override
-  _WaterViewState createState() => _WaterViewState();
+  _BuddyViewState createState() => _BuddyViewState();
 }
 
-class _WaterViewState extends State<WaterView> with TickerProviderStateMixin {
+class _BuddyViewState extends State<BuddyView> with TickerProviderStateMixin {
   Future<bool> getData() async {
     await Future<dynamic>.delayed(const Duration(milliseconds: 50));
     return true;
   }
+
+  String _buddy = globals.data['Buddys'];
 
   final myController = TextEditingController();
 
@@ -60,36 +62,8 @@ class _WaterViewState extends State<WaterView> with TickerProviderStateMixin {
                 child: Padding(
                   padding: const EdgeInsets.only(
                       top: 16, left: 16, right: 16, bottom: 16),
-                  child: new TextFormField(
-                    controller: myController,
-                    decoration: new InputDecoration(
-                      labelText: "Buddy's Eintragen",
-                      fillColor: Colors.white,
-                      border: new OutlineInputBorder(
-                        borderRadius: const BorderRadius.only(
-                            topLeft: Radius.circular(8.0),
-                            bottomLeft: Radius.circular(8.0),
-                            bottomRight: Radius.circular(8.0),
-                            topRight: Radius.circular(68.0)),
-                        borderSide: new BorderSide(),
-                      ),
-                      //fillColor: Colors.green
-                    ),
-                    onChanged: (tes) {
-                      globals.buddys = tes;
-                      print(tes);
-                    },
-                    validator: (val) {
-                      if (val.length == 0) {
-                        return "Es muss mindestens ein Buddy eingetragen werden!";
-                      } else {
-                        return null;
-                      }
-                    },
-                    keyboardType: TextInputType.text,
-                    style: new TextStyle(
-                      fontFamily: FintnessAppTheme.fontName,
-                    ),
+                  child: new Text(
+                    '$_buddy',
                   ),
                 ),
               ),

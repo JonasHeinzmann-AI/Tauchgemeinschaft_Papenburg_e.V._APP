@@ -1,31 +1,33 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
-import 'package:intl/intl.dart';
 import 'package:numberpicker/numberpicker.dart';
 import 'package:tgp_app/global.dart' as globals;
 import 'package:tgp_app/logbook/logbook_theme.dart';
 
-class BodyMeasurementView extends StatefulWidget {
+class BodyMeasurementViewget extends StatefulWidget {
   final AnimationController animationController;
   final Animation animation;
+  dynamic data;
 
-  BodyMeasurementView({Key key, this.animationController, this.animation})
-      : super(key: key);
+  BodyMeasurementViewget({
+    Key key,
+    this.animationController,
+    this.animation,
+    this.data,
+  }) : super(key: key);
 
   @override
-  _BodyMeasurementViewState createState() => _BodyMeasurementViewState();
+  _BodyMeasurementViewgetState createState() => _BodyMeasurementViewgetState();
 }
 
-class _BodyMeasurementViewState extends State<BodyMeasurementView> {
-  _selectDate(BuildContext context) async {}
-  double _currentTemp = globals.AirTemp;
-  double _currentTempwat = globals.WaterTemperature;
-  int _duration = globals.Duration;
-  double _depth = globals.Depth;
-
+class _BodyMeasurementViewgetState extends State<BodyMeasurementViewget> {
+  double currentTemp = globals.data['Air_Temp'];
+  double _currentTempwat = globals.data['Water_Temp'];
+  int _duration = globals.data['Duration'];
+  double _depth = globals.data['Depth'];
+  dynamic dat;
   void initState() {
-    globals.date = DateTime.now();
     super.initState();
   }
 
@@ -34,8 +36,8 @@ class _BodyMeasurementViewState extends State<BodyMeasurementView> {
         context: context,
         builder: (BuildContext context) {
           return new NumberPickerDialog.decimal(
-            minValue: -50,
-            maxValue: 50,
+            minValue: 0,
+            maxValue: 100,
             title: new Text("Tiefe des Tauchgangs"),
             initialDoubleValue: _depth,
           );
@@ -43,24 +45,6 @@ class _BodyMeasurementViewState extends State<BodyMeasurementView> {
       if (value != null) {
         setState(() => _depth = value);
         globals.Depth = value;
-      }
-    });
-  }
-
-  void _showDialogTemp() {
-    showDialog<double>(
-        context: context,
-        builder: (BuildContext context) {
-          return new NumberPickerDialog.decimal(
-            minValue: -50,
-            maxValue: 50,
-            title: new Text("Temperatur über Wasser"),
-            initialDoubleValue: _currentTemp,
-          );
-        }).then((double value) {
-      if (value != null) {
-        setState(() => _currentTemp = value);
-        globals.AirTemp = value;
       }
     });
   }
@@ -214,20 +198,19 @@ class _BodyMeasurementViewState extends State<BodyMeasurementView> {
                                       ),
                                       FlatButton(
                                           onPressed: () {
-                                            DatePicker.showDateTimePicker(
-                                                context,
+                                            DatePicker.showDatePicker(context,
+                                                theme: DatePickerTheme(
+                                                  containerHeight: 210.0,
+                                                ),
                                                 showTitleActions: true,
+                                                minTime: DateTime(2000, 1, 1),
+                                                maxTime: DateTime(2022, 12, 31),
                                                 onConfirm: (date) {
-                                              String formattedDate = DateFormat(
-                                                      'dd.MM.yyyy | kk:mm')
-                                                  .format(date);
-                                              globals.date = date;
-                                              print(globals.date);
-                                              _date = '${formattedDate} Uhr';
+                                              _date =
+                                                  '${date.year} - ${date.month} - ${date.day}';
+
                                               setState(() {});
-                                            },
-                                                currentTime: globals.date,
-                                                locale: LocaleType.de);
+                                            });
                                           },
                                           child: Text(
                                             '$_date',
@@ -272,21 +255,17 @@ class _BodyMeasurementViewState extends State<BodyMeasurementView> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
-                                FlatButton(
-                                    onPressed: () {
-                                      _showDialogTemp();
-                                    },
-                                    child: Text(
-                                      '$_currentTemp °C',
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                        fontFamily: FintnessAppTheme.fontName,
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 16,
-                                        letterSpacing: -0.2,
-                                        color: FintnessAppTheme.darkText,
-                                      ),
-                                    )),
+                                Text(
+                                  '$currentTemp °C',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    fontFamily: FintnessAppTheme.fontName,
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 16,
+                                    letterSpacing: -0.2,
+                                    color: FintnessAppTheme.darkText,
+                                  ),
+                                ),
                                 Padding(
                                   padding: const EdgeInsets.only(top: 1),
                                   child: Text(
