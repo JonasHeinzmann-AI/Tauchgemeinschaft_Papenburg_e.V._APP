@@ -1,7 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
-import 'package:numberpicker/numberpicker.dart';
 import 'package:tgp_app/global.dart' as globals;
 import 'package:tgp_app/logbook/logbook_theme.dart';
 
@@ -29,60 +27,6 @@ class _BodyMeasurementViewgetState extends State<BodyMeasurementViewget> {
   dynamic dat;
   void initState() {
     super.initState();
-  }
-
-  void _showDialogdepth() {
-    showDialog<double>(
-        context: context,
-        builder: (BuildContext context) {
-          return new NumberPickerDialog.decimal(
-            minValue: 0,
-            maxValue: 100,
-            title: new Text("Tiefe des Tauchgangs"),
-            initialDoubleValue: _depth,
-          );
-        }).then((double value) {
-      if (value != null) {
-        setState(() => _depth = value);
-        globals.Depth = value;
-      }
-    });
-  }
-
-  void _showDialogTempwat() {
-    showDialog<double>(
-        context: context,
-        builder: (BuildContext context) {
-          return new NumberPickerDialog.decimal(
-            minValue: -50,
-            maxValue: 50,
-            title: new Text("Temperatur unter Wasser"),
-            initialDoubleValue: _currentTempwat,
-          );
-        }).then((double value) {
-      if (value != null) {
-        setState(() => _currentTempwat = value);
-        globals.WaterTemperature = value;
-      }
-    });
-  }
-
-  void _showDialogduration() {
-    showDialog<int>(
-        context: context,
-        builder: (BuildContext context) {
-          return new NumberPickerDialog.integer(
-            minValue: 0,
-            maxValue: 500,
-            title: new Text("Dauer des Tauchgangs"),
-            initialIntegerValue: _duration,
-          );
-        }).then((num value) {
-      if (value != null) {
-        setState(() => _duration = value);
-        globals.Duration = value;
-      }
-    });
   }
 
   String _date = "Auswahl";
@@ -151,19 +95,14 @@ class _BodyMeasurementViewgetState extends State<BodyMeasurementViewget> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 crossAxisAlignment: CrossAxisAlignment.end,
                                 children: <Widget>[
-                                  FlatButton(
-                                    onPressed: () {
-                                      _showDialogdepth();
-                                    },
-                                    child: Text(
-                                      '$_depth',
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                        fontFamily: FintnessAppTheme.fontName,
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 32,
-                                        color: FintnessAppTheme.nearlyDarkBlue,
-                                      ),
+                                  Text(
+                                    '$_depth',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      fontFamily: FintnessAppTheme.fontName,
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 32,
+                                      color: FintnessAppTheme.nearlyDarkBlue,
                                     ),
                                   ),
                                   Padding(
@@ -196,34 +135,16 @@ class _BodyMeasurementViewgetState extends State<BodyMeasurementViewget> {
                                             .withOpacity(0.5),
                                         size: 16,
                                       ),
-                                      FlatButton(
-                                          onPressed: () {
-                                            DatePicker.showDatePicker(context,
-                                                theme: DatePickerTheme(
-                                                  containerHeight: 210.0,
-                                                ),
-                                                showTitleActions: true,
-                                                minTime: DateTime(2000, 1, 1),
-                                                maxTime: DateTime(2022, 12, 31),
-                                                onConfirm: (date) {
-                                              _date =
-                                                  '${date.year} - ${date.month} - ${date.day}';
-
-                                              setState(() {});
-                                            });
-                                          },
-                                          child: Text(
-                                            '$_date',
-                                            textAlign: TextAlign.center,
-                                            style: TextStyle(
-                                              fontFamily:
-                                                  FintnessAppTheme.fontName,
-                                              fontWeight: FontWeight.w500,
-                                              fontSize: 14,
-                                              letterSpacing: 0.0,
-                                              color: FintnessAppTheme.grey
-                                                  .withOpacity(0.5),
-                                            ),
+                                      Text('$_date',
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                            fontFamily:
+                                                FintnessAppTheme.fontName,
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 14,
+                                            letterSpacing: 0.0,
+                                            color: FintnessAppTheme.grey
+                                                .withOpacity(0.5),
                                           ))
                                     ],
                                   ),
@@ -292,21 +213,14 @@ class _BodyMeasurementViewgetState extends State<BodyMeasurementViewget> {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: <Widget>[
-                                    FlatButton(
-                                        onPressed: () {
-                                          _showDialogTempwat();
-                                        },
-                                        child: Text(
-                                          '$_currentTempwat °C',
-                                          textAlign: TextAlign.center,
-                                          style: TextStyle(
-                                            fontFamily:
-                                                FintnessAppTheme.fontName,
-                                            fontWeight: FontWeight.w500,
-                                            fontSize: 16,
-                                            letterSpacing: -0.2,
-                                            color: FintnessAppTheme.darkText,
-                                          ),
+                                    Text('$_currentTempwat °C',
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                          fontFamily: FintnessAppTheme.fontName,
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: 16,
+                                          letterSpacing: -0.2,
+                                          color: FintnessAppTheme.darkText,
                                         )),
                                     Padding(
                                       padding: const EdgeInsets.only(top: 1),
@@ -336,21 +250,14 @@ class _BodyMeasurementViewgetState extends State<BodyMeasurementViewget> {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   crossAxisAlignment: CrossAxisAlignment.end,
                                   children: <Widget>[
-                                    FlatButton(
-                                        onPressed: () {
-                                          _showDialogduration();
-                                        },
-                                        child: Text(
-                                          '$_duration min',
-                                          textAlign: TextAlign.center,
-                                          style: TextStyle(
-                                            fontFamily:
-                                                FintnessAppTheme.fontName,
-                                            fontWeight: FontWeight.w500,
-                                            fontSize: 16,
-                                            letterSpacing: -0.2,
-                                            color: FintnessAppTheme.darkText,
-                                          ),
+                                    Text('$_duration min',
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                          fontFamily: FintnessAppTheme.fontName,
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: 16,
+                                          letterSpacing: -0.2,
+                                          color: FintnessAppTheme.darkText,
                                         )),
                                     Padding(
                                       padding: const EdgeInsets.only(top: 1),

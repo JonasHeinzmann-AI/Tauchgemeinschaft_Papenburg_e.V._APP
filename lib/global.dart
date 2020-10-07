@@ -24,3 +24,4 @@ String buddy;
 String flight;
 String durpref;
 int degree;
+int doc;

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:numberpicker/numberpicker.dart';
 import 'package:tgp_app/global.dart' as globals;
 import 'package:tgp_app/logbook/logbook_theme.dart';
 
@@ -19,78 +18,6 @@ class _AusrustungViewgetState extends State<AusrustungViewget> {
   double _luft = globals.data['DTGpreassure'];
   int _blei = globals.data['Blei_Weight'];
   double _neopren = globals.data['Neopren_Thickness'];
-
-  void _showDialogNeopren() {
-    showDialog<double>(
-        context: context,
-        builder: (BuildContext context) {
-          return new NumberPickerDialog.decimal(
-            minValue: 0,
-            maxValue: 20,
-            title: new Text("Neopren Stärke"),
-            initialDoubleValue: _neopren,
-          );
-        }).then((double value) {
-      if (value != null) {
-        setState(() => _neopren = value);
-        globals.Neopren = value;
-      }
-    });
-  }
-
-  void _showDTGsize() {
-    showDialog<int>(
-        context: context,
-        builder: (BuildContext context) {
-          return new NumberPickerDialog.integer(
-            minValue: 0,
-            maxValue: 20,
-            title: new Text("Größe des DGT"),
-            initialIntegerValue: _DTGsize,
-          );
-        }).then((num value) {
-      if (value != null) {
-        setState(() => _DTGsize = value);
-        globals.dtg = value;
-      }
-    });
-  }
-
-  void _showBlei() {
-    showDialog<int>(
-        context: context,
-        builder: (BuildContext context) {
-          return new NumberPickerDialog.integer(
-            minValue: 0,
-            maxValue: 20,
-            title: new Text("Bleich Gewicht"),
-            initialIntegerValue: _blei,
-          );
-        }).then((num value) {
-      if (value != null) {
-        setState(() => _blei = value);
-        globals.Blei = value;
-      }
-    });
-  }
-
-  void _showDialogLuft() {
-    showDialog<double>(
-        context: context,
-        builder: (BuildContext context) {
-          return new NumberPickerDialog.decimal(
-            minValue: 50,
-            maxValue: 300,
-            title: new Text("Flaschen Füllung"),
-            initialDoubleValue: _luft,
-          );
-        }).then((double value) {
-      if (value != null) {
-        setState(() => _luft = value);
-        globals.Airpreassure = value;
-      }
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -151,19 +78,14 @@ class _AusrustungViewgetState extends State<AusrustungViewget> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 crossAxisAlignment: CrossAxisAlignment.end,
                                 children: <Widget>[
-                                  FlatButton(
-                                    onPressed: () {
-                                      _showDialogNeopren();
-                                    },
-                                    child: Text(
-                                      '$_neopren',
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                        fontFamily: FintnessAppTheme.fontName,
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 32,
-                                        color: FintnessAppTheme.nearlyDarkBlue,
-                                      ),
+                                  Text(
+                                    '$_neopren',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      fontFamily: FintnessAppTheme.fontName,
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 32,
+                                      color: FintnessAppTheme.nearlyDarkBlue,
                                     ),
                                   ),
                                   Padding(
@@ -209,20 +131,14 @@ class _AusrustungViewgetState extends State<AusrustungViewget> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
-                                FlatButton(
-                                    onPressed: () {
-                                      _showDTGsize();
-                                    },
-                                    child: Text(
-                                      '$_DTGsize L',
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                        fontFamily: FintnessAppTheme.fontName,
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 16,
-                                        letterSpacing: -0.2,
-                                        color: FintnessAppTheme.darkText,
-                                      ),
+                                Text('$_DTGsize L',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      fontFamily: FintnessAppTheme.fontName,
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 16,
+                                      letterSpacing: -0.2,
+                                      color: FintnessAppTheme.darkText,
                                     )),
                                 Padding(
                                   padding: const EdgeInsets.only(top: 1),
@@ -250,21 +166,14 @@ class _AusrustungViewgetState extends State<AusrustungViewget> {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: <Widget>[
-                                    FlatButton(
-                                        onPressed: () {
-                                          _showBlei();
-                                        },
-                                        child: Text(
-                                          '$_blei Kg',
-                                          textAlign: TextAlign.center,
-                                          style: TextStyle(
-                                            fontFamily:
-                                                FintnessAppTheme.fontName,
-                                            fontWeight: FontWeight.w500,
-                                            fontSize: 16,
-                                            letterSpacing: -0.2,
-                                            color: FintnessAppTheme.darkText,
-                                          ),
+                                    Text('$_blei Kg',
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                          fontFamily: FintnessAppTheme.fontName,
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: 16,
+                                          letterSpacing: -0.2,
+                                          color: FintnessAppTheme.darkText,
                                         )),
                                     Padding(
                                       padding: const EdgeInsets.only(top: 1),
@@ -294,21 +203,14 @@ class _AusrustungViewgetState extends State<AusrustungViewget> {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   crossAxisAlignment: CrossAxisAlignment.end,
                                   children: <Widget>[
-                                    FlatButton(
-                                        onPressed: () {
-                                          _showDialogLuft();
-                                        },
-                                        child: Text(
-                                          '$_luft Bar',
-                                          textAlign: TextAlign.center,
-                                          style: TextStyle(
-                                            fontFamily:
-                                                FintnessAppTheme.fontName,
-                                            fontWeight: FontWeight.w500,
-                                            fontSize: 16,
-                                            letterSpacing: -0.2,
-                                            color: FintnessAppTheme.darkText,
-                                          ),
+                                    Text('$_luft Bar',
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                          fontFamily: FintnessAppTheme.fontName,
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: 16,
+                                          letterSpacing: -0.2,
+                                          color: FintnessAppTheme.darkText,
                                         )),
                                     Padding(
                                       padding: const EdgeInsets.only(top: 1),

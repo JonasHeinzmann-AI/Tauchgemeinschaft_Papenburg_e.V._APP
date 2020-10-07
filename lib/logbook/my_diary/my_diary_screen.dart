@@ -68,7 +68,7 @@ class _MyDiaryScreenState extends State<MyDiaryScreen>
   dynamic data = globals.data;
   dynamic datar = globals.data;
   int _fact = globals.num;
-  int _dat = globals.docnum;
+  int _dat = globals.doc;
 
   Future<dynamic> getDatas(tg) async {
     Timestamp startTime;
@@ -80,36 +80,6 @@ class _MyDiaryScreenState extends State<MyDiaryScreen>
       setState(() {
         data = snapshot.data;
         globals.data = data;
-      });
-    });
-    final DocumentReference documents =
-        Firestore.instance.collection(globals.uid).document("tg$_dat");
-    await documents.get().then<dynamic>((DocumentSnapshot snapshot) async {
-      setState(() {
-        datar = snapshot.data;
-        startTime = data['Date'];
-        DateTime Timestart = startTime.toDate();
-        int difference1 = 24 - Timestart.difference(Time).inMinutes;
-        int difference2 = Time.difference(Timestart).inMinutes;
-        print(Timestart);
-        globals.diff = difference1;
-        if (difference1 > 24) {
-          globals.diff = 0;
-          globals.durpref = "Min";
-          globals.degree = 0;
-        } else if (difference1 < 1) {
-          globals.diff = difference2;
-          globals.durpref = "Min";
-          globals.degree = (6 * difference2);
-        } else if (difference1 < 0) {
-          globals.diff = 0;
-          globals.durpref = "Min";
-          globals.degree = 0;
-        } else {
-          globals.diff = difference1;
-          globals.durpref = "Std";
-          globals.degree = (15 * difference1);
-        }
       });
     });
   }

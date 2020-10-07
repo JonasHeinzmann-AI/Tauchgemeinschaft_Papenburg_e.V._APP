@@ -46,6 +46,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
     List<DocumentSnapshot> _myDocCount = _myDoc.documents;
     globals.docnum = (_myDocCount.length);
     _fact = (_myDocCount.length);
+    globals.doc = (_myDocCount.length);
     globals.uid = (userId); // Count of Documents in Collection
     final DocumentReference document =
         Firestore.instance.collection(globals.uid).document("tg$_fact");
@@ -56,29 +57,25 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
         print(data['Air_Temp']);
         startTime = data['Date'];
         DateTime Timestart = startTime.toDate();
-        int difference1 = Time.difference(Timestart).inHours;
+        int difference1 = 24 - Time.difference(Timestart).inHours;
         int difference2 = Time.difference(Timestart).inMinutes;
         print(difference1);
         globals.diff = difference1;
         test = data['Air_Temp'];
         globals.temp = test;
         globals.data = data;
-        if (difference1 > 24) {
-          globals.diff = 0;
-          globals.durpref = "Min";
-          globals.degree = 0;
+        if (difference1 <= 24 && difference1 > 1) {
+          globals.diff = difference1;
+          globals.durpref = "Std";
+          globals.degree = (15 * difference1);
         } else if (difference1 < 1) {
           globals.diff = difference2;
           globals.durpref = "Min";
           globals.degree = (6 * difference2);
-        } else if (difference1 < 0) {
+        } else {
           globals.diff = 0;
           globals.durpref = "Min";
           globals.degree = 0;
-        } else {
-          globals.diff = difference1;
-          globals.durpref = "Std";
-          globals.degree = (15 * difference1);
         }
       });
     });
