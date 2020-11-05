@@ -17,6 +17,8 @@ environment:
   sdk: ">=2.1.0 <3.0.0"
 
 dependencies:
+  flutter_localizations:
+    sdk: flutter
   flutter:
     sdk: flutter
 
@@ -47,6 +49,9 @@ dependencies:
   path_provider: ^1.6.14
   http: ^0.12.2
   http_client: ^1.4.1
+  flutter_rounded_date_picker: 1.0.0
+  flutter_datetime_picker: 1.2.5
+  numberpicker: ^1.2.1
 
 
 

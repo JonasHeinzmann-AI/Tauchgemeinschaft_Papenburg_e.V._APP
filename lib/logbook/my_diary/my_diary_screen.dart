@@ -1,12 +1,15 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:tgp_app/global.dart' as globals;
+import 'package:tgp_app/logbook/Log/ausr%C3%BCstung.dart';
+import 'package:tgp_app/logbook/Log/body_measurement.dart';
+import 'package:tgp_app/logbook/Log/buddy_view.dart';
 import 'package:tgp_app/logbook/logbook_theme.dart';
-import 'package:tgp_app/logbook/my_diary/meals_list_view.dart';
-import 'package:tgp_app/logbook/my_diary/water_view.dart';
-import 'package:tgp_app/logbook/ui_view/body_measurement.dart';
-import 'package:tgp_app/logbook/ui_view/glass_view.dart';
 import 'package:tgp_app/logbook/ui_view/mediterranesn_diet_view.dart';
 import 'package:tgp_app/logbook/ui_view/title_view.dart';
+
+import '../logbook_home_screen.dart';
 
 class MyDiaryScreen extends StatefulWidget {
   const MyDiaryScreen({Key key, this.animationController}) : super(key: key);
@@ -24,8 +27,13 @@ class _MyDiaryScreenState extends State<MyDiaryScreen>
   final ScrollController scrollController = ScrollController();
   double topBarOpacity = 0.0;
 
+  refresh() {
+    setState(() {});
+  }
+
   @override
   void initState() {
+    getDatas(_fact);
     addAllListData();
     topBarAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
         CurvedAnimation(
@@ -57,13 +65,36 @@ class _MyDiaryScreenState extends State<MyDiaryScreen>
     super.initState();
   }
 
+  dynamic data = globals.data;
+  dynamic datar = globals.data;
+  int _fact = globals.num;
+  int _dat = globals.doc;
+
+  Future<dynamic> getDatas(tg) async {
+    Timestamp startTime;
+    DateTime Time = DateTime.now();
+    final DocumentReference document =
+        Firestore.instance.collection(globals.uid).document("tg$tg");
+
+    await document.get().then<dynamic>((DocumentSnapshot snapshot) async {
+      setState(() {
+        data = snapshot.data;
+        globals.data = data;
+      });
+    });
+  }
+
+  Future<bool> getData() async {
+    await Future<dynamic>.delayed(const Duration(milliseconds: 50));
+    return true;
+  }
+
   void addAllListData() {
     const int count = 9;
 
     listViews.add(
       TitleView(
         titleTxt: 'Übersicht',
-        subTxt: 'Details',
         animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
             parent: widget.animationController,
             curve:
@@ -80,33 +111,10 @@ class _MyDiaryScreenState extends State<MyDiaryScreen>
         animationController: widget.animationController,
       ),
     );
-    listViews.add(
-      TitleView(
-        titleTxt: 'Meals today',
-        subTxt: 'Customize',
-        animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
-            parent: widget.animationController,
-            curve:
-                Interval((1 / count) * 2, 1.0, curve: Curves.fastOutSlowIn))),
-        animationController: widget.animationController,
-      ),
-    );
-
-    listViews.add(
-      MealsListView(
-        mainScreenAnimation: Tween<double>(begin: 0.0, end: 1.0).animate(
-            CurvedAnimation(
-                parent: widget.animationController,
-                curve: Interval((1 / count) * 3, 1.0,
-                    curve: Curves.fastOutSlowIn))),
-        mainScreenAnimationController: widget.animationController,
-      ),
-    );
 
     listViews.add(
       TitleView(
-        titleTxt: 'Body measurement',
-        subTxt: 'Today',
+        titleTxt: 'Tauchgangs Daten',
         animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
             parent: widget.animationController,
             curve:
@@ -116,7 +124,7 @@ class _MyDiaryScreenState extends State<MyDiaryScreen>
     );
 
     listViews.add(
-      BodyMeasurementView(
+      BodyMeasurementViewget(
         animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
             parent: widget.animationController,
             curve:
@@ -126,8 +134,7 @@ class _MyDiaryScreenState extends State<MyDiaryScreen>
     );
     listViews.add(
       TitleView(
-        titleTxt: 'Water',
-        subTxt: 'Aqua SmartBottle',
+        titleTxt: 'Ausrüstungs Daten',
         animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
             parent: widget.animationController,
             curve:
@@ -137,7 +144,27 @@ class _MyDiaryScreenState extends State<MyDiaryScreen>
     );
 
     listViews.add(
-      WaterView(
+      AusrustungViewget(
+        animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
+            parent: widget.animationController,
+            curve:
+                Interval((1 / count) * 5, 1.0, curve: Curves.fastOutSlowIn))),
+        animationController: widget.animationController,
+      ),
+    );
+    listViews.add(
+      TitleView(
+        titleTxt: 'Buddy',
+        animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
+            parent: widget.animationController,
+            curve:
+                Interval((1 / count) * 6, 1.0, curve: Curves.fastOutSlowIn))),
+        animationController: widget.animationController,
+      ),
+    );
+
+    listViews.add(
+      BuddyView(
         mainScreenAnimation: Tween<double>(begin: 0.0, end: 1.0).animate(
             CurvedAnimation(
                 parent: widget.animationController,
@@ -146,20 +173,6 @@ class _MyDiaryScreenState extends State<MyDiaryScreen>
         mainScreenAnimationController: widget.animationController,
       ),
     );
-    listViews.add(
-      GlassView(
-          animation: Tween<double>(begin: 0.0, end: 1.0).animate(
-              CurvedAnimation(
-                  parent: widget.animationController,
-                  curve: Interval((1 / count) * 8, 1.0,
-                      curve: Curves.fastOutSlowIn))),
-          animationController: widget.animationController),
-    );
-  }
-
-  Future<bool> getData() async {
-    await Future<dynamic>.delayed(const Duration(milliseconds: 50));
-    return true;
   }
 
   String dateFormate = DateFormat("dd-MM-yyyy").format(DateTime.now());
@@ -271,7 +284,19 @@ class _MyDiaryScreenState extends State<MyDiaryScreen>
                                 highlightColor: Colors.transparent,
                                 borderRadius: const BorderRadius.all(
                                     Radius.circular(32.0)),
-                                onTap: () {},
+                                onTap: () {
+                                  _fact = _fact - 1;
+                                  globals.num = _fact;
+                                  getDatas(_fact);
+                                  print(_fact);
+                                  print(globals.data);
+                                  addAllListData();
+                                  Navigator.pushReplacement(
+                                      context,
+                                      new MaterialPageRoute(
+                                          builder: (context) =>
+                                              FitnessAppHomeScreen()));
+                                },
                                 child: Center(
                                   child: Icon(
                                     Icons.keyboard_arrow_left,
@@ -289,14 +314,9 @@ class _MyDiaryScreenState extends State<MyDiaryScreen>
                                 children: <Widget>[
                                   Padding(
                                     padding: const EdgeInsets.only(right: 8),
-                                    child: Icon(
-                                      Icons.calendar_today,
-                                      color: FintnessAppTheme.grey,
-                                      size: 18,
-                                    ),
                                   ),
                                   Text(
-                                    '$dateFormate',
+                                    '$_fact',
                                     textAlign: TextAlign.left,
                                     style: TextStyle(
                                       fontFamily: FintnessAppTheme.fontName,
@@ -316,7 +336,18 @@ class _MyDiaryScreenState extends State<MyDiaryScreen>
                                 highlightColor: Colors.transparent,
                                 borderRadius: const BorderRadius.all(
                                     Radius.circular(32.0)),
-                                onTap: () {},
+                                onTap: () {
+                                  _fact = _fact + 1;
+                                  getDatas(_fact);
+                                  print(_fact);
+                                  globals.num = _fact;
+                                  print(globals.data);
+                                  Navigator.pushReplacement(
+                                      context,
+                                      new MaterialPageRoute(
+                                          builder: (context) =>
+                                              FitnessAppHomeScreen()));
+                                },
                                 child: Center(
                                   child: Icon(
                                     Icons.keyboard_arrow_right,
