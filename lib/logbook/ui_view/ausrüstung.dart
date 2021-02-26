@@ -16,7 +16,7 @@ class AusrustungView extends StatefulWidget {
 
 class _AusrustungViewState extends State<AusrustungView> {
   int _DTGsize = globals.dtg;
-  double _luft = globals.Airpreassure;
+  int _luft = globals.Airpreassure;
   int _blei = globals.Blei;
   double _neopren = globals.Neopren;
 
@@ -75,16 +75,16 @@ class _AusrustungViewState extends State<AusrustungView> {
   }
 
   void _showDialogLuft() {
-    showDialog<double>(
+    showDialog<int>(
         context: context,
         builder: (BuildContext context) {
-          return new NumberPickerDialog.decimal(
+          return new NumberPickerDialog.integer(
             minValue: 50,
             maxValue: 300,
             title: new Text("Flaschen Füllung"),
-            initialDoubleValue: _luft,
+            initialIntegerValue: _luft,
           );
-        }).then((double value) {
+        }).then((num value) {
       if (value != null) {
         setState(() => _luft = value);
         globals.Airpreassure = value;

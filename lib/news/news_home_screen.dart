@@ -1,7 +1,7 @@
 import 'dart:ui';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'model/news_list_data.dart';
 import 'news_app_theme.dart';
@@ -93,32 +93,165 @@ class _NewsHomeScreenState extends State<NewsHomeScreen>
                         },
                         body: Container(
                           color: NewsAppTheme.buildLightTheme().backgroundColor,
-                          child: ListView.builder(
-                            itemCount: NewsList.length,
-                            padding: const EdgeInsets.only(top: 8),
-                            scrollDirection: Axis.vertical,
-                            itemBuilder: (BuildContext context, int index) {
-                              final int count =
-                                  NewsList.length > 10 ? 10 : NewsList.length;
-                              final Animation<double> animation =
-                                  Tween<double>(begin: 0.0, end: 1.0).animate(
-                                      CurvedAnimation(
-                                          parent: animationController,
-                                          curve: Interval(
-                                              (1 / count) * index, 1.0,
-                                              curve: Curves.fastOutSlowIn)));
-                              animationController.forward();
-                              return NewsListView(
-                                callback: () {},
-                                NewsData: NewsList[index],
-                                animation: animation,
-                                animationController: animationController,
-                              );
-                            },
-                          ),
+                          child: StreamBuilder(
+                              stream: Firestore.instance
+                                  .collection('news')
+                                  .snapshots(),
+                              builder: (BuildContext context,
+                                  AsyncSnapshot<QuerySnapshot> snapshot) {
+                                if (!snapshot.hasData) {
+                                  return Center(
+                                    child: CircularProgressIndicator(),
+                                  );
+                                }
+                                final Animation<double> animation =
+                                    Tween<double>(begin: 0.0, end: 1.0).animate(
+                                        CurvedAnimation(
+                                            parent: animationController,
+                                            curve: Interval((1 / 1000), 1.0,
+                                                curve: Curves.fastOutSlowIn)));
+                                animationController.forward();
+
+                                return ListView(
+                                  children:
+                                      snapshot.data.documents.map((document) {
+                                    return Center(
+                                        child: AnimatedBuilder(
+                                            animation: animationController,
+                                            builder:
+                                                (BuildContext, Widget child) {
+                                              return FadeTransition(
+                                                opacity: animation,
+                                                child: Transform(
+                                                  transform:
+                                                      Matrix4.translationValues(
+                                                          0.0,
+                                                          50 *
+                                                              (1.0 -
+                                                                  animation
+                                                                      .value),
+                                                          0.0),
+                                                  child: Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            left: 24,
+                                                            right: 24,
+                                                            top: 8,
+                                                            bottom: 16),
+                                                    child: InkWell(
+                                                      splashColor:
+                                                          Colors.transparent,
+                                                      child: Container(
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          borderRadius:
+                                                              const BorderRadius
+                                                                      .all(
+                                                                  Radius
+                                                                      .circular(
+                                                                          16.0)),
+                                                          boxShadow: <
+                                                              BoxShadow>[
+                                                            BoxShadow(
+                                                              color: Colors.grey
+                                                                  .withOpacity(
+                                                                      0.6),
+                                                              offset:
+                                                                  const Offset(
+                                                                      4, 4),
+                                                              blurRadius: 16,
+                                                            ),
+                                                          ],
+                                                        ),
+                                                        child: ClipRRect(
+                                                          borderRadius:
+                                                              const BorderRadius
+                                                                      .all(
+                                                                  Radius
+                                                                      .circular(
+                                                                          16.0)),
+                                                          child: Stack(
+                                                            children: <Widget>[
+                                                              Column(
+                                                                children: <
+                                                                    Widget>[
+                                                                  AspectRatio(
+                                                                    aspectRatio:
+                                                                        2,
+                                                                    child: Image
+                                                                        .network(
+                                                                            document['URL']),
+                                                                  ),
+                                                                  Container(
+                                                                    color: NewsAppTheme
+                                                                            .buildLightTheme()
+                                                                        .backgroundColor,
+                                                                    child: Row(
+                                                                      mainAxisAlignment:
+                                                                          MainAxisAlignment
+                                                                              .center,
+                                                                      crossAxisAlignment:
+                                                                          CrossAxisAlignment
+                                                                              .start,
+                                                                      children: <
+                                                                          Widget>[
+                                                                        Expanded(
+                                                                            child:
+                                                                                Container(
+                                                                          child:
+                                                                              Padding(
+                                                                            padding: const EdgeInsets.only(
+                                                                                left: 16,
+                                                                                top: 8,
+                                                                                bottom: 8),
+                                                                            child:
+                                                                                Column(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
+                                                                              Text(
+                                                                                document['Title'],
+                                                                                textAlign: TextAlign.left,
+                                                                                style: TextStyle(
+                                                                                  fontWeight: FontWeight.w600,
+                                                                                  fontSize: 22,
+                                                                                ),
+                                                                              ),
+                                                                              Row(
+                                                                                crossAxisAlignment: CrossAxisAlignment.center,
+                                                                                mainAxisAlignment: MainAxisAlignment.start,
+                                                                                children: <Widget>[
+                                                                                  Container(
+                                                                                    width: MediaQuery.of(context).size.width * 0.82,
+                                                                                    child: Text(
+                                                                                      document['Message'],
+                                                                                      style: TextStyle(fontSize: 14, color: Colors.grey.withOpacity(0.8)),
+                                                                                      overflow: TextOverflow.ellipsis,
+                                                                                      maxLines: 10,
+                                                                                    ),
+                                                                                  ),
+                                                                                ],
+                                                                              ),
+                                                                            ]),
+                                                                          ),
+                                                                        ))
+                                                                      ],
+                                                                    ),
+                                                                  ),
+                                                                ],
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              );
+                                            }));
+                                  }).toList(),
+                                );
+                              }),
                         ),
                       ),
-                    )
+                    ),
                   ],
                 ),
               ),
@@ -149,30 +282,7 @@ class _NewsHomeScreenState extends State<NewsHomeScreen>
               builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
                 if (!snapshot.hasData) {
                   return const SizedBox();
-                } else {
-                  return ListView.builder(
-                    itemCount: NewsList.length,
-                    scrollDirection: Axis.vertical,
-                    itemBuilder: (BuildContext context, int index) {
-                      final int count =
-                          NewsList.length > 10 ? 10 : NewsList.length;
-                      final Animation<double> animation =
-                          Tween<double>(begin: 0.0, end: 1.0).animate(
-                              CurvedAnimation(
-                                  parent: animationController,
-                                  curve: Interval((1 / count) * index, 1.0,
-                                      curve: Curves.fastOutSlowIn)));
-                      animationController.forward();
-
-                      return NewsListView(
-                        callback: () {},
-                        NewsData: NewsList[index],
-                        animation: animation,
-                        animationController: animationController,
-                      );
-                    },
-                  );
-                }
+                } else {}
               },
             ),
           )
@@ -207,166 +317,7 @@ class _NewsHomeScreenState extends State<NewsHomeScreen>
     );
   }
 
-  Widget getSearchBarUI() {
-    return Padding(
-      padding: const EdgeInsets.only(left: 16, right: 16, top: 8, bottom: 8),
-      child: Row(
-        children: <Widget>[
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.only(right: 16, top: 8, bottom: 8),
-              child: Container(
-                decoration: BoxDecoration(
-                  color: NewsAppTheme.buildLightTheme().backgroundColor,
-                  borderRadius: const BorderRadius.all(
-                    Radius.circular(38.0),
-                  ),
-                  boxShadow: <BoxShadow>[
-                    BoxShadow(
-                        color: Colors.grey.withOpacity(0.2),
-                        offset: const Offset(0, 2),
-                        blurRadius: 8.0),
-                  ],
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.only(
-                      left: 16, right: 16, top: 4, bottom: 4),
-                  child: TextField(
-                    onChanged: (String txt) {},
-                    style: const TextStyle(
-                      fontSize: 18,
-                    ),
-                    cursorColor: NewsAppTheme.buildLightTheme().primaryColor,
-                    decoration: InputDecoration(
-                      border: InputBorder.none,
-                      hintText: 'CMAS',
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ),
-          Container(
-            decoration: BoxDecoration(
-              color: NewsAppTheme.buildLightTheme().primaryColor,
-              borderRadius: const BorderRadius.all(
-                Radius.circular(38.0),
-              ),
-              boxShadow: <BoxShadow>[
-                BoxShadow(
-                    color: Colors.grey.withOpacity(0.4),
-                    offset: const Offset(0, 2),
-                    blurRadius: 8.0),
-              ],
-            ),
-            child: Material(
-              color: Colors.transparent,
-              child: InkWell(
-                borderRadius: const BorderRadius.all(
-                  Radius.circular(32.0),
-                ),
-                onTap: () {
-                  FocusScope.of(context).requestFocus(FocusNode());
-                },
-                child: Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Icon(FontAwesomeIcons.search,
-                      size: 20,
-                      color: NewsAppTheme.buildLightTheme().backgroundColor),
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget getFilterBarUI() {
-    return Stack(
-      children: <Widget>[
-        Positioned(
-          top: 0,
-          left: 0,
-          right: 0,
-          child: Container(
-            height: 24,
-            decoration: BoxDecoration(
-              color: NewsAppTheme.buildLightTheme().backgroundColor,
-              boxShadow: <BoxShadow>[
-                BoxShadow(
-                    color: Colors.grey.withOpacity(0.2),
-                    offset: const Offset(0, -2),
-                    blurRadius: 8.0),
-              ],
-            ),
-          ),
-        ),
-        Container(
-          color: NewsAppTheme.buildLightTheme().backgroundColor,
-          child: Padding(
-            padding:
-                const EdgeInsets.only(left: 16, right: 16, top: 8, bottom: 4),
-            child: Row(
-              children: <Widget>[
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      '${NewsList.length} News',
-                      style: TextStyle(
-                        fontWeight: FontWeight.w100,
-                        fontSize: 16,
-                      ),
-                    ),
-                  ),
-                ),
-                Material(
-                  color: Colors.transparent,
-                  child: InkWell(
-                    focusColor: Colors.transparent,
-                    highlightColor: Colors.transparent,
-                    hoverColor: Colors.transparent,
-                    splashColor: Colors.grey.withOpacity(0.2),
-                    borderRadius: const BorderRadius.all(
-                      Radius.circular(4.0),
-                    ),
-                    onTap: () {
-                      FocusScope.of(context).requestFocus(FocusNode());
-                      //Navigator.push<dynamic>(
-                      //context,
-                      //MaterialPageRoute<dynamic>(
-                      //  builder: (BuildContext context) => FiltersScreen(),
-                      //  fullscreenDialog: true),
-                      //);
-                    },
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 8),
-                      child: Row(
-                        children: <Widget>[
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-        const Positioned(
-          top: 0,
-          left: 0,
-          right: 0,
-          child: Divider(
-            height: 1,
-          ),
-        )
-      ],
-    );
-  }
+  Widget getFilterBarUI() {}
 
   Widget getAppBarUI() {
     return Container(

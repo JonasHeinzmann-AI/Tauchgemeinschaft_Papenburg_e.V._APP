@@ -30,11 +30,19 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
   int documents;
   int _fact;
   dynamic data;
+  dynamic news_data;
   double test;
   dynamic datar = globals.data;
   int _dat = globals.docnum;
   Timestamp startTime;
   DateTime Time = DateTime.now();
+
+  void countNews() async {
+    QuerySnapshot _myDoc =
+        await Firestore.instance.collection('News').getDocuments();
+    List<DocumentSnapshot> _myDocCount = _myDoc.documents;
+    globals.news = (_myDocCount.length);
+  }
 
   void countDocuments() async {
     user = await _auth.currentUser();
@@ -45,6 +53,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
         await Firestore.instance.collection(userId).getDocuments();
     List<DocumentSnapshot> _myDocCount = _myDoc.documents;
     globals.docnum = (_myDocCount.length);
+    globals.max = (_myDocCount.length);
     _fact = (_myDocCount.length);
     globals.doc = (_myDocCount.length);
     globals.uid = (userId); // Count of Documents in Collection
@@ -58,7 +67,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
         startTime = data['Date'];
         DateTime Timestart = startTime.toDate();
         int difference1 = 24 - Time.difference(Timestart).inHours;
-        int difference2 = Time.difference(Timestart).inMinutes;
+        int difference2 = 1440 - Time.difference(Timestart).inMinutes;
         print(difference1);
         globals.diff = difference1;
         test = data['Air_Temp'];
@@ -68,7 +77,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
           globals.diff = difference1;
           globals.durpref = "Std";
           globals.degree = (15 * difference1);
-        } else if (difference1 < 1) {
+        } else if (difference1 < 1 && difference2 > 0) {
           globals.diff = difference2;
           globals.durpref = "Min";
           globals.degree = (6 * difference2);

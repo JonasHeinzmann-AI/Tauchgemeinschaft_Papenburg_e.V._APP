@@ -15,7 +15,7 @@ class AusrustungViewget extends StatefulWidget {
 
 class _AusrustungViewgetState extends State<AusrustungViewget> {
   int _DTGsize = globals.data['DTG_Size'];
-  double _luft = globals.data['DTGpreassure'];
+  int _luft = globals.data['DTGpreassure'];
   int _blei = globals.data['Blei_Weight'];
   double _neopren = globals.data['Neopren_Thickness'];
 

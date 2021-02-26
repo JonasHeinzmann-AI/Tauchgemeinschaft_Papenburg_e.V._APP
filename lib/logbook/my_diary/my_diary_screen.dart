@@ -67,6 +67,7 @@ class _MyDiaryScreenState extends State<MyDiaryScreen>
 
   dynamic data = globals.data;
   dynamic datar = globals.data;
+  int _max = globals.max;
   int _fact = globals.num;
   int _dat = globals.doc;
 
@@ -285,17 +286,31 @@ class _MyDiaryScreenState extends State<MyDiaryScreen>
                                 borderRadius: const BorderRadius.all(
                                     Radius.circular(32.0)),
                                 onTap: () {
-                                  _fact = _fact - 1;
-                                  globals.num = _fact;
-                                  getDatas(_fact);
-                                  print(_fact);
-                                  print(globals.data);
-                                  addAllListData();
-                                  Navigator.pushReplacement(
-                                      context,
-                                      new MaterialPageRoute(
-                                          builder: (context) =>
-                                              FitnessAppHomeScreen()));
+                                  if (_fact > 1) {
+                                    _fact = _fact - 1;
+                                    globals.num = _fact;
+                                    getDatas(_fact);
+                                    print(_fact);
+                                    print(globals.data);
+                                    addAllListData();
+                                    Navigator.pushReplacement(
+                                        context,
+                                        new MaterialPageRoute(
+                                            builder: (context) =>
+                                                FitnessAppHomeScreen()));
+                                  } else {
+                                    _fact = 1;
+                                    globals.num = _fact;
+                                    getDatas(_fact);
+                                    print(_fact);
+                                    print(globals.data);
+                                    addAllListData();
+                                    Navigator.pushReplacement(
+                                        context,
+                                        new MaterialPageRoute(
+                                            builder: (context) =>
+                                                FitnessAppHomeScreen()));
+                                  }
                                 },
                                 child: Center(
                                   child: Icon(
@@ -337,16 +352,31 @@ class _MyDiaryScreenState extends State<MyDiaryScreen>
                                 borderRadius: const BorderRadius.all(
                                     Radius.circular(32.0)),
                                 onTap: () {
-                                  _fact = _fact + 1;
-                                  getDatas(_fact);
-                                  print(_fact);
-                                  globals.num = _fact;
-                                  print(globals.data);
-                                  Navigator.pushReplacement(
-                                      context,
-                                      new MaterialPageRoute(
-                                          builder: (context) =>
-                                              FitnessAppHomeScreen()));
+                                  if (_fact < _max) {
+                                    _fact = _fact + 1;
+                                    print(_max);
+                                    getDatas(_fact);
+                                    print(_fact);
+                                    globals.num = _fact;
+                                    print(globals.data);
+                                    Navigator.pushReplacement(
+                                        context,
+                                        new MaterialPageRoute(
+                                            builder: (context) =>
+                                                FitnessAppHomeScreen()));
+                                  } else {
+                                    _fact = _max;
+                                    getDatas(_fact);
+                                    print(_max);
+                                    print(_fact);
+                                    globals.num = _fact;
+                                    print(globals.data);
+                                    Navigator.pushReplacement(
+                                        context,
+                                        new MaterialPageRoute(
+                                            builder: (context) =>
+                                                FitnessAppHomeScreen()));
+                                  }
                                 },
                                 child: Center(
                                   child: Icon(

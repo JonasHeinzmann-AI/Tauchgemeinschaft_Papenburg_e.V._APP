@@ -9,6 +9,8 @@ import 'package:tgp_app/logbook/ui_view/body_measurement.dart';
 import 'package:tgp_app/logbook/ui_view/glass_view.dart';
 import 'package:tgp_app/logbook/ui_view/title_view.dart';
 
+import 'logbook_home_screen.dart';
+
 class add_entry extends StatefulWidget {
   const add_entry({Key key, this.animationController}) : super(key: key);
 
@@ -208,7 +210,39 @@ class _add_entry extends State<add_entry> with TickerProviderStateMixin {
     );
   }
 
+  Future<void> _showMyDialog() async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Tauchgang gespeichert'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text('Dein Tauchgang wurde erfolgreich gespeichert.'),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: Text('OK'),
+              onPressed: () {
+                Navigator.pushReplacement(
+                    context,
+                    new MaterialPageRoute(
+                        builder: (context) => FitnessAppHomeScreen()));
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   Widget getAppBarUI() {
+    var animationController = AnimationController(
+        duration: const Duration(milliseconds: 600), vsync: this);
     return Column(
       children: <Widget>[
         AnimatedBuilder(
@@ -251,7 +285,7 @@ class _add_entry extends State<add_entry> with TickerProviderStateMixin {
                               child: Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Text(
-                                  'Eintragung',
+                                  'Eintrag',
                                   textAlign: TextAlign.left,
                                   style: TextStyle(
                                     fontFamily: FintnessAppTheme.fontName,
@@ -287,6 +321,16 @@ class _add_entry extends State<add_entry> with TickerProviderStateMixin {
                                       _UploadeData();
                                       print(globals.uid);
                                       print(globals.docnum);
+                                      globals.Depth = 0;
+                                      globals.AirTemp = 0;
+                                      globals.WaterTemperature = 0;
+                                      globals.Duration = 0;
+                                      globals.Neopren = 0;
+                                      globals.dtg = 0;
+                                      globals.Blei = 0;
+                                      globals.Airpreassure = 200;
+                                      globals.Buddy = "";
+                                      _showMyDialog();
                                     },
                                   )
                                 ],

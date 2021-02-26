@@ -1,9 +1,9 @@
-class NewsListData {
-  NewsListData({
+class HotelListData {
+  HotelListData({
     this.imagePath = '',
     this.titleTxt = '',
     this.subTxt = "",
-    this.URL = "",
+    this.dist = 1.8,
     this.anmeldeschluss = '',
     this.rating = 4.5,
     this.kursgebuehr = 180,
@@ -15,7 +15,7 @@ class NewsListData {
   String imagePath;
   String titleTxt;
   String subTxt;
-  String URL;
+  double dist;
   double rating;
   String anmeldeschluss;
   int kursgebuehr;
@@ -24,14 +24,17 @@ class NewsListData {
   bool id3;
   List id;
 
-  void run() {
+
+  void run(){
     List id = null;
-    id = NewsList.where((item) => item.id3).toList();
+    id = hotelList.where((item) => item.id3).toList();
     print(List);
   }
 
-  static List<NewsListData> NewsList = <NewsListData>[
-    NewsListData(
+
+
+  static List<HotelListData> hotelList = <HotelListData>[
+    HotelListData(
       imagePath: 'assets/kurse/cmas/cmas1.png',
       titleTxt: 'CMAS*',
       subTxt: 'Inkl. Lehrmaterial',
@@ -41,7 +44,7 @@ class NewsListData {
       id2: false,
       id3: true,
     ),
-    NewsListData(
+    HotelListData(
       imagePath: 'assets/kurse/cmas/cmas2.png',
       titleTxt: 'CMAS**',
       subTxt: 'Inkl. Lehrmaterial',
@@ -51,7 +54,7 @@ class NewsListData {
       id2: false,
       id3: true,
     ),
-    NewsListData(
+    HotelListData(
       imagePath: 'assets/kurse/cmas/cmas3.png',
       titleTxt: 'CMAS***',
       subTxt: 'Inkl. Lehrmaterial',

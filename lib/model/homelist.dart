@@ -1,5 +1,7 @@
 import 'package:flutter/widgets.dart';
-import 'package:tgp_app/calendar/samples/calendar/getting_started/getting_started.dart';
+import 'package:tgp_app/Videos/Videos_home_screen.dart';
+import 'package:tgp_app/about_us/about_us_home_screen.dart';
+import 'package:tgp_app/calendar/calendar_home_screen.dart';
 import 'package:tgp_app/cours_booking/cours_home_screen.dart';
 import 'package:tgp_app/logbook/logbook_home_screen.dart';
 import 'package:tgp_app/news/news_home_screen.dart';
@@ -16,7 +18,7 @@ class HomeList {
   static List<HomeList> homeList = [
     HomeList(
       imagePath: 'assets/cover/Verein.png',
-      //navigateScreen: DesignCourseHomeScreen(),
+      navigateScreen: About_us_HomeScreen(),
     ),
     HomeList(
       imagePath: 'assets/cover/Tauchkurse.png',
@@ -24,7 +26,7 @@ class HomeList {
     ),
     HomeList(
       imagePath: 'assets/cover/Kalender.png',
-      navigateScreen: CalendarApp(),
+      navigateScreen: CalendarHomeScreen(),
     ),
     HomeList(
       imagePath: 'assets/cover/logbuch.png',
@@ -35,8 +37,12 @@ class HomeList {
       navigateScreen: NewsHomeScreen(),
     ),
     HomeList(
-      imagePath: 'assets/cover/Kalender.png',
+      imagePath: 'assets/cover/Fotos.png',
       //navigateScreen: News_screen(),
+    ),
+    HomeList(
+      imagePath: 'assets/cover/Videos.png',
+      navigateScreen: VideoHomeScreen(),
     ),
     //HomeList(
     //imagePath: 'assets/design_course/design_course.png',
