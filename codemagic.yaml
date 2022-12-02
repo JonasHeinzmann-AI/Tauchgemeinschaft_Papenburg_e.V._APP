@@ -1,0 +1,42 @@
+# Automatically generated on 2022-12-02 UTC from https://codemagic.io/app/5f4813d9a04804138f528828/settings
+# Note that this configuration is not an exact match to UI settings. Review and adjust as necessary.
+
+workflows:
+  default-workflow:
+    name: Default Workflow
+    max_build_duration: 60
+    environment:
+      flutter: v1.12.13+hotfix.8
+      xcode: latest
+      cocoapods: default
+      ndk: r22b
+      java: 1.8
+    scripts:
+      - |
+        # set up debug keystore
+        rm -f ~/.android/debug.keystore
+        keytool -genkeypair \
+          -alias androiddebugkey \
+          -keypass android \
+          -keystore ~/.android/debug.keystore \
+          -storepass android \
+          -dname 'CN=Android Debug,O=Android,C=US' \
+          -keyalg 'RSA' \
+          -keysize 2048 \
+          -validity 10000
+      - |
+        # set up local properties
+        echo "flutter.sdk=$HOME/programs/flutter" > "$FCI_BUILD_DIR/android/local.properties"
+      - flutter packages pub get
+      - flutter build apk --debug
+    artifacts:
+      - build/**/outputs/apk/**/*.apk
+      - build/**/outputs/bundle/**/*.aab
+      - build/**/outputs/**/mapping.txt
+      - '*.snap'
+      - build/windows/**/*.msix
+      - flutter_drive.log
+    publishing:
+      email:
+        recipients:
+          - jon03hei@gmail.com
