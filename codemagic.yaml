@@ -9,7 +9,6 @@ workflows:
       flutter: v1.12.13+hotfix.8
       xcode: latest
       cocoapods: default
-      ndk: r22b
       java: 1.8
     scripts:
       - |
